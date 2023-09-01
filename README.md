@@ -1,4 +1,4 @@
-# uni_admission_scrapper
+# University Admission Links Scrapper
 
 - clone the project to the local
 - create a virtual environment and activate it
