@@ -11,9 +11,16 @@ class UniversityAdmissionsSpider(scrapy.Spider):
 
         for link in universities:
             university_name = link.xpath('td[1]/text()').get()
+            university_name = university_name.lower()
+
+            # Replace spaces with underscores
+            university_name = university_name.replace(" ", "_")
+
+            # Remove special characters (non-alphanumeric and non-underscore characters)
+            university_name = ''.join(c for c in university_name if c.isalnum() or c == '_')
             university_link = link.xpath('td[2]/a/@href').get()
 
-            university_data[university_name] = {"link": university_link}
+            university_data[university_name] = {"university_link": university_link}
 
             # Follow the link to the university's page to get admission links
             yield response.follow(university_link, self.parse_admission_links, meta={"university_name": university_name, "university_data": university_data})
